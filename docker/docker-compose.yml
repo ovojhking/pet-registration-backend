@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: pet_backend_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ../src:/var/www
+    networks:
+      - pet_backend_network
+    depends_on:
+      - db
+
+  web:
+    image: nginx:latest
+    container_name: pet_backend_nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ../src:/var/www
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - pet_backend_network
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8
+    container_name: pet_backend_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: pet_backend
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    networks:
+      - pet_backend_network
+    volumes:
+      - db_data:/var/lib/mysql
+
+networks:
+  pet_backend_network:
+
+volumes:
+  db_data:
