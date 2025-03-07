@@ -8,16 +8,16 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('pets', function (Blueprint $table) {
-            $table->boolean('is_age_estimated')->default(false);
+        Schema::create('pet_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::table('pets', function (Blueprint $table) {
-            $table->dropColumn('is_age_estimated');
-        });
+        Schema::dropIfExists('pet_types');
     }
 
 };

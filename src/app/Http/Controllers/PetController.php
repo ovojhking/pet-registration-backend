@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pet;
+use App\Models\PetType;
+use App\Models\Breed;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -23,13 +25,12 @@ class PetController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|in:cat,dog',
-            'breed' => 'nullable|string|max:255',
+            'pet_type_id' => 'required|exists:pet_types,id',
+            'breed_id' => 'required|exists:breeds,id',
             'date_of_birth' => 'nullable|date',
             'approximate_age' => 'nullable|integer|min:1|max:20',
             'gender' => 'required|in:male,female',
         ]);
-
         // Ensure at least one age-related field is provided
         if (empty($validatedData['date_of_birth']) && empty($validatedData['approximate_age'])) {
             return response()->json(['error' => 'Either date_of_birth or approximate_age must be provided.'], 400);
@@ -44,25 +45,23 @@ class PetController extends Controller
             $isAgeEstimated = true;
         }
 
-        $dangerousBreeds = ['Pitbull', 'Mastiff', 'Rottweiler'];
-        $isDangerous = ($validatedData['type'] === 'dog' && in_array($validatedData['breed'], $dangerousBreeds));
-
         $pet = Pet::create([
             'name' => $validatedData['name'],
-            'type' => $validatedData['type'],
-            'breed' => $validatedData['breed'],
+            'pet_type_id' => $validatedData['pet_type_id'],
+            'breed_id' => $validatedData['breed_id'] ?? null,
             'date_of_birth' => $dateOfBirth,
             'is_age_estimated' => $isAgeEstimated,
             'gender' => $validatedData['gender'],
-            'is_dangerous' => $isDangerous,
         ]);
-
         $age = Carbon::parse($dateOfBirth)->diff(Carbon::now())->y;
+
+        $breed = Breed::find($validatedData['breed_id']);
+        $petType = PetType::find($validatedData['pet_type_id']);
 
         return response()->json([
             'name' => $pet->name,
-            'type' => $pet->type,
-            'breed' => $pet->breed,
+            'type' => $petType->name,
+            'breed' => $breed->name,
             'date_of_birth' => $pet->date_of_birth,
             'age' => $age,
             'is_age_estimated' => $pet->is_age_estimated,
@@ -86,12 +85,12 @@ class PetController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'string|max:255',
-            'type' => 'in:cat,dog',
-            'breed' => 'nullable|string|max:255',
+            'pet_type_id' => 'exists:pet_types,id',
+            'breed_id' => 'exists:breeds,id',
             'date_of_birth' => 'nullable|date',
             'approximate_age' => 'nullable|integer|min:1|max:20',
             'gender' => 'in:male,female',
-            'is_dangerous' => 'boolean'
+            'is_dangerous' => 'nullable|boolean',
         ]);
     
         // Determine if we are updating with approximate age
