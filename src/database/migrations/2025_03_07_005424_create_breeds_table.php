@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pet_type_id')->constrained('pet_types')->onDelete('cascade');
             $table->string('name')->unique();
-            $table->boolean('is_dangerous')->default(false);
             $table->timestamps();
         });
     }

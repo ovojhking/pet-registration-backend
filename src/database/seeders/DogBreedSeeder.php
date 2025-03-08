@@ -16,8 +16,6 @@ class DogBreedSeeder extends Seeder
     {
         $dogType = PetType::where('name', 'dog')->first();
 
-        $dangerousBreeds = ['Pitbull', 'Mastiff', 'Rottweiler'];
-
         $dogBreeds = [
             'Labrador Retriever',
             'German Shepherd',
@@ -37,7 +35,6 @@ class DogBreedSeeder extends Seeder
             Breed::create([
                 'name' => $breedName,
                 'pet_type_id' => $dogType->id,
-                'is_dangerous' => in_array($breedName, $dangerousBreeds)
             ]);
         }
     }

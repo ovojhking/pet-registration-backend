@@ -20,6 +20,9 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female']);
             $table->boolean('is_age_estimated')->default(false);
             $table->boolean('is_dangerous')->default(false);
+            $table->boolean('is_mix')->default(false); 
+            $table->string('custom_breed')->nullable();
+            $table->boolean('is_unknown')->default(false);
             $table->timestamps();
         });
     }

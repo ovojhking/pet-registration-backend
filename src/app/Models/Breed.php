@@ -9,7 +9,7 @@ class Breed extends Model
     use HasFactory;
 
     protected $table = 'breeds';
-    protected $fillable = ['name', 'pet_type_id', 'is_dangerous'];
+    protected $fillable = ['name', 'pet_type_id'];
 
     public function pets()
     {
