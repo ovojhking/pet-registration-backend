@@ -7,9 +7,18 @@ use App\Models\Breed;
 
 class BreedController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $breeds = Breed::all();
+        $query = Breed::query();
+
+        if ($request->has('petTypeId')) {
+            $petTypeId = (int) $request->input('petTypeId');
+
+            $query->where('pet_type_id', $petTypeId);
+        }
+
+        $breeds = $query->get();
+
         return response()->json($breeds);
     }
 
