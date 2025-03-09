@@ -17,18 +17,18 @@ class DogBreedSeeder extends Seeder
         $dogType = PetType::where('name', 'dog')->first();
 
         $dogBreeds = [
-            'Labrador Retriever',
-            'German Shepherd',
-            'Golden Retriever',
-            'French Bulldog',
-            'Bulldog',
-            'Poodle',
-            'Beagle',
-            'Rottweiler',
-            'Dachshund',
-            'Siberian Husky',
-            'Pitbull',
-            'Mastiff'
+            'labrador_retriever',
+            'german_shepherd',
+            'golden_retriever',
+            'french_bulldog',
+            'bulldog',
+            'poodle',
+            'beagle',
+            'rottweiler',
+            'dachshund',
+            'siberian_husky',
+            'pitbull',
+            'mastiff'
         ];
 
         foreach ($dogBreeds as $breedName) {

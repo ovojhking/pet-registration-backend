@@ -16,7 +16,7 @@ class CatBreedSeeder extends Seeder
     {
         $catType = PetType::where('name', 'cat')->first();
         
-        $catBreeds = ['Persian', 'Maine Coon', 'Siamese', 'Ragdoll', 'Bengal'];
+        $catBreeds = ['persian', 'maine_coon', 'siamese', 'ragdoll', 'bengal'];
 
         foreach ($catBreeds as $breedName) {
             Breed::create([

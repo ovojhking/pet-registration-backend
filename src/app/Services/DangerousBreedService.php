@@ -7,7 +7,7 @@ use App\Models\Breed;
 
 class DangerousBreedService
 {
-    const DANGEROUS_BREEDS = ['Pitbull', 'Mastiff', 'Rottweiler'];
+    const DANGEROUS_BREEDS = ['pitbull', 'mastiff', 'rottweiler'];
 
     public function hasDangerousBreeds($petTypeId)
     {
