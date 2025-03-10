@@ -44,6 +44,7 @@ Open a terminal and run the following command to navigate to the `docker` direct
 
 ```bash=
     cp .env.example .env
+    composer install
     php artisan key:generate
     php artisan migrate:fresh --force --seed
 ```
