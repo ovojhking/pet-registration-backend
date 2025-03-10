@@ -2,6 +2,8 @@
 
 This project serves as the backend for [Pet Registration Frontend](https://github.com/ovojhking/pet-registration-frontend)
 
+It will be executed on **localhost:8000** after starting.
+
 ## Purpose
 
 The main goal is to simulate a pet registration system for a pet website.
@@ -45,6 +47,8 @@ Open a terminal and run the following command to navigate to the `docker` direct
     php artisan key:generate
     php artisan migrate:fresh --force --seed
 ```
+
+### 
 
 
 ## Technical Features
